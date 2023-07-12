@@ -93,7 +93,7 @@ RUN if [ ! -d /tmp/hestiacp ]; then \
 ### Install Hestia
     && cd /tmp/hestiacp/install \
     && bash ./hst-install-debian-docker.sh --apache no --phpfpm yes --multiphp yes --vsftpd yes --proftpd no \
-        --named yes --mysql yes --postgresql no --exim yes --dovecot yes --sieve yes --clamav yes --spamassassin yes \
+        --named yes --mysql no --postgresql no --exim yes --dovecot yes --sieve yes --clamav yes --spamassassin yes \
         --iptables yes --fail2ban yes --quota yes --api yes --interactive no --port 8083 \
         --hostname server.hestiacp.localhost --email admin@example.com --password admin --lang en \
         --with-debs /tmp/hestiacp-src/deb/ --force \
