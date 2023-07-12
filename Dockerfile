@@ -70,7 +70,7 @@ ARG MARIADB_CLIENT_VERSION
 # This argument makes it possible to change the version without having to update the autocompile script.
 ARG ZLIB_VERSION
 
-COPY rootfs/usr/local/hstc/install/generate-docker-installer.sh /tmp/generate-docker-installer.sh
+COPY /rootfs/usr/local/hstc/install/generate-docker-installer.sh /tmp/generate-docker-installer.sh
 
 # Clones the official repository if the local has not been added
 RUN if [ ! -d /tmp/hestiacp ]; then \
