@@ -82,7 +82,7 @@ RUN if [ ! -d /tmp/hestiacp ]; then \
         git checkout "$HESTIACP_BRANCH"; \
     fi \
 # Apply changes to docker
-    && bash /tmp/generate-docker-installer.sh /tmp/hestiacp \
+    && bash /rootfs/usr/local/hstc/install/generate-docker-installer.sh /tmp/hestiacp \
 ### Temporary
     && if [ -n "$ZLIB_VERSION" ]; then \
         sed -Ei "s|^ZLIB_V=.*|ZLIB_V='$ZLIB_VERSION'|" /tmp/hestiacp/src/hst_autocompile.sh; \
@@ -103,6 +103,7 @@ RUN if [ ! -d /tmp/hestiacp ]; then \
 #    && rm -rf /etc/apt/sources.list.d/* \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
+
 
 ENV HESTIA=/usr/local/hestia \
     PATH=/usr/local/hestia/bin:$PATH

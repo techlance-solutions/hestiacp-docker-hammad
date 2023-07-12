@@ -5,13 +5,13 @@ variables:
 images:
   stable:
     source_image: $DOCKER_REPOSITORY
-    branch: "tags/1.5.15"
-    version: 1.5.15
+    branch: "tags/1.8.1"
+    version: 1.8.1
     split_versions: yes
   beta:
     source_image: $DOCKER_REPOSITORY:beta
-    branch: "tags/1.5.15"
-    version: 1.5.15
+    branch: "tags/1.8.1"
+    version: 1.8.1
     split_versions: yes
   experimental:
     source_image: $DOCKER_REPOSITORY:experimental
