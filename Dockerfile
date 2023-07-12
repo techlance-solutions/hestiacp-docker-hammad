@@ -59,6 +59,9 @@ COPY hestiacp /tmp/hestiacp
 ## * Compile Hestia packages;
 ## * Run the installer with the compiled packages.
 ###
+
+RUN git config --global --unset https.proxy
+
 FROM hestiacp-$HESTIACP_SOURCE AS hestiacp-installed
 
 ARG HESTIACP_REPOSITORY=https://github.com/hestiacp/hestiacp.git
