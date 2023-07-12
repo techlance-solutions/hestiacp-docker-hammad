@@ -1498,44 +1498,44 @@ fi
 #                  Configure MariaDB                       #
 #----------------------------------------------------------#
 
-if [ -z 'mysql-disabled' ]; then
-    echo "[ * ] Configuring MariaDB database server..."
-    mycnf="my-small.cnf"
-    if [ $memory -gt 1200000 ]; then
-        mycnf="my-medium.cnf"
-    fi
-    if [ $memory -gt 3900000 ]; then
-        mycnf="my-large.cnf"
-    fi
+# if [ -z 'mysql-disabled' ]; then
+#     echo "[ * ] Configuring MariaDB database server..."
+#     mycnf="my-small.cnf"
+#     if [ $memory -gt 1200000 ]; then
+#         mycnf="my-medium.cnf"
+#     fi
+#     if [ $memory -gt 3900000 ]; then
+#         mycnf="my-large.cnf"
+#     fi
 
-    # Run mysql_install_db 
-    mysql_install_db >> $LOG
-    # Remove symbolic link
-    rm -f /etc/mysql/my.cnf
-    # Configuring MariaDB
-    cp -f $HESTIA_INSTALL_DIR/mysql/$mycnf /etc/mysql/my.cnf
+#     # Run mysql_install_db 
+#     mysql_install_db >> $LOG
+#     # Remove symbolic link
+#     rm -f /etc/mysql/my.cnf
+#     # Configuring MariaDB
+#     cp -f $HESTIA_INSTALL_DIR/mysql/$mycnf /etc/mysql/my.cnf
 
-    update-rc.d mysql defaults > /dev/null 2>&1
-    systemctl start mysql >> $LOG
-    check_result $? "mariadb start failed"
+#     update-rc.d mysql defaults > /dev/null 2>&1
+#     systemctl start mysql >> $LOG
+#     check_result $? "mariadb start failed"
 
-    # Securing MariaDB installation
-    mpass=$(gen_pass)
-    echo -e "[client]\npassword='$mpass'\n" > /root/.my.cnf
-    chmod 600 /root/.my.cnf
+#     # Securing MariaDB installation
+#     mpass=$(gen_pass)
+#     echo -e "[client]\npassword='$mpass'\n" > /root/.my.cnf
+#     chmod 600 /root/.my.cnf
     
-    # Ater root password
-    mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$mpass'; FLUSH PRIVILEGES;"
-    # Allow mysql access via socket for startup
-    mysql -e "UPDATE mysql.global_priv SET priv=json_set(priv, '$.password_last_changed', UNIX_TIMESTAMP(), '$.plugin', 'mysql_native_password', '$.authentication_string', 'invalid', '$.auth_or', json_array(json_object(), json_object('plugin', 'unix_socket'))) WHERE User='root';"
-    # Disable anonymous users
-    mysql -e "DELETE FROM mysql.global_priv WHERE User='';"
-    # Drop test database
-    mysql -e "DROP DATABASE IF EXISTS test"
-    mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
-    # Flush privileges
-    mysql -e "FLUSH PRIVILEGES;"
-fi
+#     # Ater root password
+#     mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$mpass'; FLUSH PRIVILEGES;"
+#     # Allow mysql access via socket for startup
+#     mysql -e "UPDATE mysql.global_priv SET priv=json_set(priv, '$.password_last_changed', UNIX_TIMESTAMP(), '$.plugin', 'mysql_native_password', '$.authentication_string', 'invalid', '$.auth_or', json_array(json_object(), json_object('plugin', 'unix_socket'))) WHERE User='root';"
+#     # Disable anonymous users
+#     mysql -e "DELETE FROM mysql.global_priv WHERE User='';"
+#     # Drop test database
+#     mysql -e "DROP DATABASE IF EXISTS test"
+#     mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
+#     # Flush privileges
+#     mysql -e "FLUSH PRIVILEGES;"
+# fi
 
 
 #----------------------------------------------------------#
